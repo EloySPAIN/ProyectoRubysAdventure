@@ -9,7 +9,11 @@ public class RubyController : MonoBehaviour
     public int health { get { return currentHealth; } }
     public float velocidad = 5f;
     Rigidbody2D rigidbody2d;
-    // Start is called before the first frame update
+
+    public float timeInvincible = 2.0f;
+    bool isInvincible;
+    float invincibleTimer;
+
     void Start() {
         rigidbody2d = GetComponent<Rigidbody2D>();
         QualitySettings.vSyncCount = 0;
@@ -17,7 +21,7 @@ public class RubyController : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
+
     void Update() {
         Vector2 position = rigidbody2d.position;
         if (Input.GetKey(KeyCode.D))
@@ -42,29 +46,25 @@ public class RubyController : MonoBehaviour
             rigidbody2d.MovePosition(position);
         }
 
-        //void OnTriggerEnter(Collider other)
-        //{
-        //    if (other.CompareTag("TriggerObject"))
-        //    {
-        //        // Desactiva la colisión del primer collider
-        //        Collider[] colliders = GetComponents<Collider>();
-        //        colliders[1].isTrigger = true;
-        //    }
-        //}
-
-        //void OnTriggerExit(Collider other)
-        //{
-        //    if (other.CompareTag("TriggerObject"))
-        //    {
-        //        // Activa la colisión del primer collider
-        //        Collider[] colliders = GetComponents<Collider>();
-        //        colliders[1].isTrigger = false;
-        //    }
-        //}
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer < 0)
+                isInvincible = false;
+        }
     }
 
     public void ChangeHealth(int amount)
     {
+        if (amount < 0)
+        {
+            if (isInvincible)
+                return;
+
+            isInvincible = true;
+            invincibleTimer = timeInvincible;
+        }
+
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
     }
