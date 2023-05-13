@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 1265414247821452561}
   - component: {fileID: -7377604847082343884}
   - component: {fileID: 769187410}
-  m_Layer: 0
+  - component: {fileID: -5485000293288078727}
+  m_Layer: 8
   m_Name: walk-with-weapon-1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -103,6 +104,7 @@ MonoBehaviour:
   maxHealth: 5
   velocidad: 5
   timeInvincible: 2
+  projectilePrefab: {fileID: 4454791496708817405, guid: 43f24be8a36318649995b7d286eb37c1, type: 3}
 --- !u!50 &1265414247821452561
 Rigidbody2D:
   serializedVersion: 4
@@ -176,3 +178,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.26591635, y: 0.39829397}
   m_EdgeRadius: 0
+--- !u!95 &-5485000293288078727
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8986914000895700177}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b77822e0485373d40b5beb92e9a5e728, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

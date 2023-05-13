@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     int direction = 1;
     public bool derOIz;
     int rotacionMov = 0;
+    bool broken = true;
     
 
     void Start()
@@ -49,6 +50,11 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
+        if (!broken)
+        {
+            return;
+        }
+
 
 
         rigidbody2d.MovePosition(position);
@@ -60,6 +66,21 @@ public class EnemyController : MonoBehaviour
             rotacionMov++;
             rotacionMov = rotacionMov >= 4 ? rotacionMov = 0 : rotacionMov++;
         }
+    }
+
+    void FixedUpdate()
+    {
+        if (!broken)
+        {
+            return;
+        }
+    }
+
+    public void Fix()
+    {
+        broken = false;
+        rigidbody2d.simulated = false;
+        animator.SetTrigger("Fixed");
     }
 
     void OnCollisionEnter2D(Collision2D other)
