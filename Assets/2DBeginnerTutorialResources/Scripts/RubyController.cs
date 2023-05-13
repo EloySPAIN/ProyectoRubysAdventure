@@ -13,6 +13,8 @@ public class RubyController : MonoBehaviour
     public float timeInvincible = 2.0f;
     bool isInvincible;
     float invincibleTimer;
+    Vector2 position;
+
 
     void Start() {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -22,29 +24,28 @@ public class RubyController : MonoBehaviour
     }
 
 
-    void Update() {
-        Vector2 position = rigidbody2d.position;
+    void Update()
+    {
+        position = rigidbody2d.position;
         if (Input.GetKey(KeyCode.D))
         {
             position.x = position.x + velocidad * Time.deltaTime;
-            rigidbody2d.MovePosition(position);
         }
         if (Input.GetKey(KeyCode.A))
         {
             position.x = position.x - velocidad * Time.deltaTime;
-            rigidbody2d.MovePosition(position);
         }
 
         if (Input.GetKey(KeyCode.W))
         {
             position.y = position.y + velocidad * Time.deltaTime;
-            rigidbody2d.MovePosition(position);
         }
         if (Input.GetKey(KeyCode.S))
         {
             position.y = position.y - velocidad * Time.deltaTime;
-            rigidbody2d.MovePosition(position);
         }
+
+        rigidbody2d.MovePosition(position);
 
         if (isInvincible)
         {
@@ -68,5 +69,4 @@ public class RubyController : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
     }
-
 }

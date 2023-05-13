@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1058995631264415070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.06, y: 1.24, z: -1}
-  m_LocalScale: {x: 0.7758, y: 0.8481, z: 1}
+  m_LocalScale: {x: 0.8100903, y: 0.88558596, z: 1.0442}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!61 &3208317021226383261
 BoxCollider2D:
   m_ObjectHideFlags: 0
