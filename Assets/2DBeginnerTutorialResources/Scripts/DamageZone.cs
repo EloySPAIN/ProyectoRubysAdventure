@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DamageZone : MonoBehaviour
 {
+    public AudioClip playerHit;
     void OnTriggerEnter2D(Collider2D other)
     {
         RubyController controller = other.GetComponent<RubyController>();
@@ -11,6 +12,8 @@ public class DamageZone : MonoBehaviour
         if (controller != null)
         {
             controller.ChangeHealth(-1);
+
+            controller.PlaySound(playerHit);
         }
     }
 }

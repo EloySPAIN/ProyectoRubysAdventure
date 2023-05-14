@@ -7,14 +7,20 @@ public class EnemyController : MonoBehaviour
     Animator animator;
     Rigidbody2D rigidbody2d;
     Vector2 position;
+    public AudioClip collectedClip;
     public ParticleSystem smokeEffect;
+    public AudioClip playerHit;
+    AudioSource audioSource;
 
     public float velocidad;
 
-    public float changeTime = 3.0f;
+    public float changeTime = 4.0f;
     float timer;
     int direction = 1;
-    public bool derOIz;
+    public bool invertidoHor;
+    public bool invertidoVer;
+    public bool unaDireccionHor;
+    public bool unaDireccionVer;
     int rotacionMov = 0;
     bool broken = true;
     
@@ -24,29 +30,53 @@ public class EnemyController : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
         timer = changeTime;
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
         position = rigidbody2d.position;
-        
-        switch (rotacionMov)
+        if (unaDireccionHor)
         {
-            case 0:
-                changeRotation(derOIz);
-                break;
-            case 1:          
-                position.y = position.y - Time.deltaTime * velocidad; // abajo
-                animator.SetFloat("Move X", 0);
-                animator.SetFloat("Move Y", -direction);
-                break;
-            case 2:
-                changeRotation(!derOIz);
-                break;
-            case 3:
-                position.y = position.y + Time.deltaTime * velocidad; // arriba
-                animator.SetFloat("Move X", 0);
-                animator.SetFloat("Move Y", direction);
-                break;
+            if (invertidoHor)
+            {
+                changeRotationHor(!invertidoHor);
+            }
+            else
+            {
+                changeRotationHor(!invertidoHor);
+            }
+        }else if (unaDireccionVer)
+        {
+            if (invertidoVer)
+            {
+                changeRotationVer(!invertidoVer);
+            }
+            else
+            {
+                changeRotationVer(!invertidoVer);
+            }
+        }
+        else
+        {
+            switch (rotacionMov)
+            {
+                case 0:
+                    changeRotationHor(invertidoHor);
+                    break;
+                case 1:
+                    position.y = position.y - Time.deltaTime * velocidad; // abajo
+                    animator.SetFloat("Move X", 0);
+                    animator.SetFloat("Move Y", -direction);
+                    break;
+                case 2:
+                    changeRotationHor(!invertidoHor);
+                    break;
+                case 3:
+                    position.y = position.y + Time.deltaTime * velocidad; // arriba
+                    animator.SetFloat("Move X", 0);
+                    animator.SetFloat("Move Y", direction);
+                    break;
+            }
         }
 
         if (!broken)
@@ -64,6 +94,9 @@ public class EnemyController : MonoBehaviour
             timer = changeTime;
             rotacionMov++;
             rotacionMov = rotacionMov >= 4 ? rotacionMov = 0 : rotacionMov++;
+
+            invertidoHor = invertidoHor ? false : true;
+            invertidoVer = invertidoVer ? false : true;
         }
     }
 
@@ -81,6 +114,7 @@ public class EnemyController : MonoBehaviour
         broken = false;
         rigidbody2d.simulated = false;
         animator.SetTrigger("Fixed");
+        audioSource.Stop();
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -90,10 +124,11 @@ public class EnemyController : MonoBehaviour
         if (player != null)
         {
             player.ChangeHealth(-1);
+            player.PlaySound(playerHit);
         }
     }
 
-    void changeRotation(bool derOIz)
+    void changeRotationHor(bool derOIz)
     {
         if (derOIz)
         {
@@ -107,5 +142,26 @@ public class EnemyController : MonoBehaviour
             animator.SetFloat("Move X", -direction);
             animator.SetFloat("Move Y", 0);
         }
+    }
+
+    void changeRotationVer(bool derOIz)
+    {
+        if (derOIz)
+        {
+            position.y = position.y + Time.deltaTime * velocidad; // arriba
+            animator.SetFloat("Move X", 0);
+            animator.SetFloat("Move Y", direction);
+        }
+        else
+        {
+            position.y = position.y - Time.deltaTime * velocidad; // abajo
+            animator.SetFloat("Move X", 0);
+            animator.SetFloat("Move Y", -direction);
+        }
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }

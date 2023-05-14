@@ -16,6 +16,7 @@ public class RubyController : MonoBehaviour
     float invincibleTimer;
     float horizontal;
     float vertical;
+    AudioSource audioSource;
 
 
     Rigidbody2D rigidbody2d;
@@ -29,6 +30,7 @@ public class RubyController : MonoBehaviour
         animator = GetComponent<Animator>();
         Application.targetFrameRate = 60;
         currentHealth = maxHealth;
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -81,10 +83,15 @@ public class RubyController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
+
             RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
             if (hit.collider != null)
             {
-                Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+                NonPlayerCharacter character = hit.collider.GetComponent<NonPlayerCharacter>();
+                if (character != null)
+                {
+                    character.DisplayDialog();
+                }
             }
         }
 
@@ -120,5 +127,10 @@ public class RubyController : MonoBehaviour
         projectile.Launch(lookDirection, 300);
 
         animator.SetTrigger("Launch");
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Proyectil : MonoBehaviour
 {
     Rigidbody2D rigidbody2d;
+    public AudioClip enemyHit;
 
     private void Awake()
     {
@@ -32,6 +33,8 @@ public class Proyectil : MonoBehaviour
         if (e != null)
         {
             e.Fix();
+
+            e.PlaySound(enemyHit);
         }
 
         Destroy(gameObject);
