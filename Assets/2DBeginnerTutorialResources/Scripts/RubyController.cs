@@ -62,7 +62,6 @@ public class RubyController : MonoBehaviour
             Launch();
         }
 
-
         rigidbody2d.MovePosition(position);
 
         Vector2 move = new Vector2(horizontal, vertical);
@@ -79,7 +78,16 @@ public class RubyController : MonoBehaviour
 
         horizontal = 0;
         vertical = 0;
-        
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
+            if (hit.collider != null)
+            {
+                Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+            }
+        }
+
         if (isInvincible)
         {
             invincibleTimer -= Time.deltaTime;
