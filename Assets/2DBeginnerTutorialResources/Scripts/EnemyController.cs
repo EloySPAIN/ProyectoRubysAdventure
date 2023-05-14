@@ -7,10 +7,9 @@ public class EnemyController : MonoBehaviour
     Animator animator;
     Rigidbody2D rigidbody2d;
     Vector2 position;
+    public ParticleSystem smokeEffect;
 
     public float velocidad;
-    public bool horizontal;
-    public bool vertical;
 
     public float changeTime = 3.0f;
     float timer;
@@ -78,6 +77,7 @@ public class EnemyController : MonoBehaviour
 
     public void Fix()
     {
+        smokeEffect.Stop();
         broken = false;
         rigidbody2d.simulated = false;
         animator.SetTrigger("Fixed");

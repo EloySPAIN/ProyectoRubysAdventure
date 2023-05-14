@@ -65,7 +65,6 @@ public class RubyController : MonoBehaviour
 
         rigidbody2d.MovePosition(position);
 
-        Debug.Log(horizontal);
         Vector2 move = new Vector2(horizontal, vertical);
 
         if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))

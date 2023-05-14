@@ -13,7 +13,7 @@ public class Proyectil : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.magnitude > 20.0f)
+        if (transform.position.magnitude > 100.0f)
         {
             Destroy(gameObject);
         }
